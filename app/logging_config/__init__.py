@@ -28,6 +28,10 @@ def after_request_logging(response):
 
     log = logging.getLogger("myApp")
     log.info("My App Logger")
+    log = logging.getLogger("mydebug")
+    log.debug("Debug Level Logger")
+    log = logging.getLogger("myrequests")
+    log.info("Request Logger")
     return response
 
 
@@ -38,7 +42,11 @@ def configure_logging():
     log.info("My App Logger")
     log = logging.getLogger("myerrors")
     log.info("THis broke")
-
+    log.warning("Warning")
+    log = logging.getLogger("mydebug")
+    log.debug("Debug Level Logger")
+    log = logging.getLogger("myrequests")
+    log.info("Request Logger")
 
 
 
@@ -79,7 +87,7 @@ LOGGING_CONFIG = {
         'file.handler.request': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'RequestFormatter',
-            'filename': 'app/logs/request.log',
+            'filename': 'app/logs/myrequests.log',
             'maxBytes': 10000000,
             'backupCount': 5,
         },
@@ -101,6 +109,13 @@ LOGGING_CONFIG = {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
             'filename': 'app/logs/werkzeug.log',
+            'maxBytes': 10000000,
+            'backupCount': 5,
+        },
+        'file.handler.mydebug': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'standard',
+            'filename': 'app/logs/mydebug.log',
             'maxBytes': 10000000,
             'backupCount': 5,
         },
@@ -133,6 +148,11 @@ LOGGING_CONFIG = {
         },
         'myerrors': {  # if __name__ == '__main__'
             'handlers': ['file.handler.errors'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+        'myrequests': {  # if __name__ == '__main__'
+            'handlers': ['file.handler.request'],
             'level': 'DEBUG',
             'propagate': False
         },
