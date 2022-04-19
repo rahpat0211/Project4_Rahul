@@ -1,8 +1,12 @@
 import os
 
+from pathlib import Path
+
 from click.testing import CliRunner
 
 from app import create_log_folder, create_database
+
+
 
 runner = CliRunner()
 
@@ -26,3 +30,21 @@ def test_create_database():
     assert os.path.exists(dbdir) == True
 
 #Test to check if Debug File is created
+
+path_to_file = 'DEBUG.log'
+path = Path(path_to_file)
+
+if path.is_file():
+    print(f'The file {path_to_file} exists')
+else:
+    print(f'The file {path_to_file} does not exist')
+
+#Test to check if Request Log File is created
+
+path_to_file = 'request.log'
+path = Path(path_to_file)
+
+if path.is_file():
+    print(f'The file {path_to_file} exists')
+else:
+    print(f'The file {path_to_file} does not exist')
