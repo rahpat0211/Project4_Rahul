@@ -28,9 +28,9 @@ def after_request_logging(response):
 
     log = logging.getLogger("myApp")
     log.info("My App Logger")
-    log = logging.getLogger("mydebug")
+    log = logging.getLogger("rahulrequest")
     log.debug("Debug Level Logger")
-    log = logging.getLogger("myrequests")
+    log = logging.getLogger("request")
     log.info("Request Logger")
     return response
 
@@ -43,9 +43,9 @@ def configure_logging():
     log = logging.getLogger("myerrors")
     log.info("THis broke")
     log.warning("Warning")
-    log = logging.getLogger("mydebug")
+    log = logging.getLogger("rahulrequest")
     log.debug("Debug Level Logger")
-    log = logging.getLogger("myrequests")
+    log = logging.getLogger("request")
     log.info("Request Logger")
 
 
@@ -87,7 +87,14 @@ LOGGING_CONFIG = {
         'file.handler.request': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'RequestFormatter',
-            'filename': 'app/logs/myrequests.log',
+            'filename': 'app/logs/request.log',
+            'maxBytes': 10000000,
+            'backupCount': 5,
+        },
+        'file.handler.rahulrequest': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'RequestFormatter',
+            'filename': 'app/logs/DEBUG.log',
             'maxBytes': 10000000,
             'backupCount': 5,
         },
@@ -112,13 +119,7 @@ LOGGING_CONFIG = {
             'maxBytes': 10000000,
             'backupCount': 5,
         },
-        'file.handler.mydebug': {
-            'class': 'logging.handlers.RotatingFileHandler',
-            'formatter': 'standard',
-            'filename': 'app/logs/mydebug.log',
-            'maxBytes': 10000000,
-            'backupCount': 5,
-        },
+
     },
     'loggers': {
         '': {  # root logger
@@ -151,11 +152,15 @@ LOGGING_CONFIG = {
             'level': 'DEBUG',
             'propagate': False
         },
-        'myrequests': {  # if __name__ == '__main__'
+        'rahulrequest': {  # if __name__ == '__main__'
+            'handlers': ['file.handler.rahulrequest'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+        'request': {  # if __name__ == '__main__'
             'handlers': ['file.handler.request'],
             'level': 'DEBUG',
             'propagate': False
         },
-
     }
 }
